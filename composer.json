@@ -1,0 +1,45 @@
+{
+    "name": "ezoterik/yii2-project-assist",
+    "type": "library",
+    "description": "Assist tools for my yii2 projects",
+    "keywords": [
+        "dev",
+        "tool"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Oleg Balykin",
+            "email": "ezoterik.h@gmail.com",
+            "homepage": "http://ezoterik.name",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.4|^8.0",
+        "yiisoft/yii2": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.3",
+        "vimeo/psalm": "^4.1",
+        "phan/phan": "^3.0",
+        "phpmd/phpmd": "@stable",
+        "nunomaduro/phpinsights": "^1.14",
+        "yiisoft/yii2-coding-standards": "~2.0.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Yii2ProjectAssist\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Yii2ProjectAssist\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
