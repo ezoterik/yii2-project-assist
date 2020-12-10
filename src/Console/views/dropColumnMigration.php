@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpMissingReturnTypeInspection */
 /**
  * This view is used by console/controllers/MigrateController.php.
  *
