@@ -32,6 +32,6 @@ class Migration extends \yii\db\Migration
 
     public function enumInt(): ColumnSchemaBuilder
     {
-        return $this->tinyInteger()->unsigned()->notNull()->defaultValue('0');
+        return $this->tinyInteger()->unsigned()->notNull();
     }
 }
