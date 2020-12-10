@@ -109,6 +109,7 @@
     <rule ref="Squiz.Operators.ValidLogicalOperators"/>
 
     <exclude-pattern>/vendor/*</exclude-pattern>
+    <exclude-pattern>/_ide_components.php</exclude-pattern>
 
     <!-- Possible rules: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Customisable-Sniff-Properties -->
     <!-- Possible rules: https://github.com/hellowearemito/yii2-coding-standards/blob/master/Application/ruleset.xml -->
