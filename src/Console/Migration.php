@@ -2,9 +2,11 @@
 
 namespace Yii2ProjectAssist\Console;
 
+use yii\db\ColumnSchemaBuilder;
+
 class Migration extends \yii\db\Migration
 {
-    public function createTable($table, $columns, $options = null)
+    public function createTable($table, $columns, $options = null): void
     {
         if ($options === null) {
             switch ($this->db->driverName) {
@@ -18,17 +20,17 @@ class Migration extends \yii\db\Migration
         parent::createTable($table, $columns, $options);
     }
 
-    public function boolean()
+    public function boolean(): ColumnSchemaBuilder
     {
         return parent::boolean()->unsigned()->notNull()->defaultValue('0');
     }
 
-    public function unixTimestamp()
+    public function unixTimestamp(): ColumnSchemaBuilder
     {
         return $this->integer()->unsigned();
     }
 
-    public function enumInt()
+    public function enumInt(): ColumnSchemaBuilder
     {
         return $this->tinyInteger()->unsigned()->notNull()->defaultValue('0');
     }
