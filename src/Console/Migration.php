@@ -4,11 +4,15 @@ namespace Yii2ProjectAssist\Console;
 
 use yii\db\ColumnSchemaBuilder;
 
+/**
+ * Важно оставлять этот класс не final т.к. от него наследуются все миграции проекта
+ */
 class Migration extends \yii\db\Migration
 {
     public function createTable($table, $columns, $options = null): void
     {
         if ($options === null) {
+            /** @noinspection DegradedSwitchInspection */
             switch ($this->db->driverName) {
                 case 'mysql':
                     //http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
