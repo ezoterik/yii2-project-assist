@@ -11,7 +11,9 @@
 /* @var $fields array the fields */
 /* @var $foreignKeys array the foreign keys */
 
-echo "<?php\n";
+echo "<?php\n\n";
+echo "declare(strict_types=1);\n";
+
 if (!empty($namespace)) {
     echo "\nnamespace {$namespace};\n";
 }

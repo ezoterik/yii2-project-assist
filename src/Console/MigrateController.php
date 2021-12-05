@@ -1,5 +1,7 @@
 <?php /** @noinspection PhpMissingFieldTypeInspection */
 
+declare(strict_types=1);
+
 namespace Yii2ProjectAssist\Console;
 
 final class MigrateController extends \yii\console\controllers\MigrateController

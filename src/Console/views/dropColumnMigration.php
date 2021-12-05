@@ -9,7 +9,9 @@
 /* @var $table string the name table */
 /* @var $fields array the fields */
 
-echo "<?php\n";
+echo "<?php\n\n";
+echo "declare(strict_types=1);\n";
+
 if (!empty($namespace)) {
     echo "\nnamespace {$namespace};\n";
 }

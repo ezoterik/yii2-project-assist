@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yii2ProjectAssist\Console;
 
 use yii\db\ColumnSchemaBuilder;
@@ -13,6 +15,7 @@ abstract class Migration extends \yii\db\Migration
     {
         if ($options === null) {
             /** @noinspection DegradedSwitchInspection */
+            /** @noinspection PhpSwitchStatementWitSingleBranchInspection */
             switch ($this->db->driverName) {
                 case 'mysql':
                     //http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
