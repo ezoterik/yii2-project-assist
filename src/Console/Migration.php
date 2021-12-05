@@ -5,9 +5,9 @@ namespace Yii2ProjectAssist\Console;
 use yii\db\ColumnSchemaBuilder;
 
 /**
- * Важно оставлять этот класс не final т.к. от него наследуются все миграции проекта
+ * Все миграции проекта должны наследоваться от этого класса
  */
-class Migration extends \yii\db\Migration
+abstract class Migration extends \yii\db\Migration
 {
     public function createTable($table, $columns, $options = null): void
     {
