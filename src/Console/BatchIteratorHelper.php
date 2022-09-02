@@ -13,47 +13,57 @@ use yii\helpers\Console;
 
 final class BatchIteratorHelper
 {
-    public static function processEach(Query $query, callable $processFunction, int $batchSize = 500): void
+    public static function processEach(Query $query, callable $processFunction, int $batchSize = 500, bool $progressOutput = true): void
     {
-        self::process($query, static function (Connection $unbufferedDb, Query $query, int &$countProcessedItems, int &$countChangedItems) use ($processFunction, $batchSize) {
-            $total = $query->count();
-
-            Console::startProgress(0, $total, 'Processing items: ', false);
+        self::process($query, static function (Connection $unbufferedDb, Query $query, int &$countProcessedItems, int &$countChangedItems) use ($processFunction, $batchSize, $progressOutput) {
+            if ($progressOutput) {
+                $total = $query->count();
+                Console::startProgress(0, $total, 'Processing items: ', false);
+            }
 
             $items = $query->each($batchSize, $unbufferedDb);
 
             /** @var ActiveRecord|array $item */
             foreach ($items as $item) {
-                Console::updateProgress(++$countProcessedItems, $total);
+                if ($progressOutput) {
+                    Console::updateProgress(++$countProcessedItems, $total);
+                }
 
                 $processFunction($item, $countChangedItems);
             }
 
-            Console::endProgress('done (' . $countProcessedItems . ' items).' . PHP_EOL);
-        });
+            if ($progressOutput) {
+                Console::endProgress('done (' . $countProcessedItems . ' items).' . PHP_EOL);
+            }
+        }, $progressOutput);
     }
 
-    public static function processBatch(Query $query, callable $processFunction, int $batchSize = 500): void
+    public static function processBatch(Query $query, callable $processFunction, int $batchSize = 500, bool $progressOutput = true): void
     {
-        self::process($query, static function (Connection $unbufferedDb, Query $query, int &$countProcessedItems, int &$countChangedItems) use ($processFunction, $batchSize) {
-            $total = $query->count();
-
-            Console::startProgress(0, $total, 'Processing items: ', false);
+        self::process($query, static function (Connection $unbufferedDb, Query $query, int &$countProcessedItems, int &$countChangedItems) use ($processFunction, $batchSize, $progressOutput) {
+            if ($progressOutput) {
+                $total = $query->count();
+                Console::startProgress(0, $total, 'Processing items: ', false);
+            }
 
             $packItems = $query->batch($batchSize, $unbufferedDb);
 
             /** @var ActiveRecord[]|array $items */
             foreach ($packItems as $items) {
-                Console::updateProgress($countProcessedItems += count($items), $total);
+                if ($progressOutput) {
+                    Console::updateProgress($countProcessedItems += count($items), $total);
+                }
 
                 $processFunction($items, $countChangedItems);
             }
 
-            Console::endProgress('done (' . $countProcessedItems . ' items).' . PHP_EOL);
-        });
+            if ($progressOutput) {
+                Console::endProgress('done (' . $countProcessedItems . ' items).' . PHP_EOL);
+            }
+        }, $progressOutput);
     }
 
-    private static function process(Query $query, callable $loopProcessFunction): void
+    private static function process(Query $query, callable $loopProcessFunction, bool $progressOutput): void
     {
         $countProcessedItems = 0;
         $countChangedItems = 0;
@@ -75,7 +85,7 @@ final class BatchIteratorHelper
             $unbufferedDb->close();
         }
 
-        if ($countChangedItems > 0) {
+        if ($progressOutput && $countChangedItems > 0) {
             Console::output('Changed items: ' . $countChangedItems);
         }
     }
