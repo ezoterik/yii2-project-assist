@@ -24,7 +24,7 @@ final class <?= $className ?> extends Migration
 
     }
 
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "<?= $className ?> cannot be reverted.\n";
 

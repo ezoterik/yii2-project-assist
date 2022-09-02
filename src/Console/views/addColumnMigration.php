@@ -19,11 +19,8 @@ if (!empty($namespace)) {
 
 use Yii2ProjectAssist\Console\Migration;
 
-class <?= $className ?> extends Migration
+final class <?= $className ?> extends Migration
 {
-    /**
-     * {@inheritdoc}
-     */
     public function safeUp()
     {
 <?= $this->render('_addColumns', [
@@ -34,9 +31,6 @@ class <?= $className ?> extends Migration
 ?>
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function safeDown()
     {
 <?= $this->render('_dropColumns', [
