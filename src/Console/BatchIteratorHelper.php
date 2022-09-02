@@ -13,14 +13,14 @@ use yii\helpers\Console;
 
 final class BatchIteratorHelper
 {
-    public static function processEach(Query $query, callable $processFunction): void
+    public static function processEach(Query $query, callable $processFunction, int $batchSize = 500): void
     {
-        self::process($query, function (Connection $unbufferedDb, Query $query, int &$countProcessedItems, int &$countChangedItems) use ($processFunction) {
+        self::process($query, static function (Connection $unbufferedDb, Query $query, int &$countProcessedItems, int &$countChangedItems) use ($processFunction, $batchSize) {
             $total = $query->count();
 
             Console::startProgress(0, $total, 'Processing items: ', false);
 
-            $items = $query->each(500, $unbufferedDb);
+            $items = $query->each($batchSize, $unbufferedDb);
 
             /** @var ActiveRecord|array $item */
             foreach ($items as $item) {
@@ -33,14 +33,14 @@ final class BatchIteratorHelper
         });
     }
 
-    public static function processBatch(Query $query, callable $processFunction): void
+    public static function processBatch(Query $query, callable $processFunction, int $batchSize = 500): void
     {
-        self::process($query, function (Connection $unbufferedDb, Query $query, int &$countProcessedItems, int &$countChangedItems) use ($processFunction) {
+        self::process($query, static function (Connection $unbufferedDb, Query $query, int &$countProcessedItems, int &$countChangedItems) use ($processFunction, $batchSize) {
             $total = $query->count();
 
             Console::startProgress(0, $total, 'Processing items: ', false);
 
-            $packItems = $query->batch(500, $unbufferedDb);
+            $packItems = $query->batch($batchSize, $unbufferedDb);
 
             /** @var ActiveRecord[]|array $items */
             foreach ($packItems as $items) {
