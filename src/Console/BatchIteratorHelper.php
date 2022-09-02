@@ -55,8 +55,6 @@ final class BatchIteratorHelper
 
     private static function process(Query $query, callable $loopProcessFunction): void
     {
-        $startPeekMemoryUsage = memory_get_peak_usage();
-
         $countProcessedItems = 0;
         $countChangedItems = 0;
 
@@ -77,12 +75,8 @@ final class BatchIteratorHelper
             $unbufferedDb->close();
         }
 
-        $endPeekMemoryUsage = memory_get_peak_usage();
-
         if ($countChangedItems > 0) {
             Console::output('Changed items: ' . $countChangedItems);
         }
-
-        Console::output('Peek memory usage: ' . Yii::$app->formatter->asShortSize($endPeekMemoryUsage - $startPeekMemoryUsage));
     }
 }
