@@ -11,6 +11,9 @@ use yii\db\Connection;
 use yii\db\Query;
 use yii\helpers\Console;
 
+/**
+ * @deprecated Будет удален в будущем
+ */
 final class BatchIteratorHelper
 {
     public static function processEach(Query $query, callable $processFunction, int $batchSize = 500, bool $progressOutput = true): void
